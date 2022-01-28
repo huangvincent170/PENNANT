@@ -18,11 +18,14 @@
 #include "InputFile.hh"
 #include "Driver.hh"
 
+#include <dr_api.h>
+
 using namespace std;
 
 
 int main(const int argc, const char** argv)
 {
+    dr_app_setup(); 
     Parallel::init();
 
     if (argc != 2) {
@@ -45,7 +48,7 @@ int main(const int argc, const char** argv)
     drv.run();
 
     Parallel::final();
-
+    dr_app_cleanup();
     return 0;
 
 }

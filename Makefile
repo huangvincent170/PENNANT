@@ -22,7 +22,7 @@ BINARY := $(BUILDDIR)/$(PRODUCT)
 CXX := icpc
 CXXFLAGS_DEBUG := -g
 CXXFLAGS_OPT := -O3 -fast -fno-alias
-CXXFLAGS_OPENMP := -openmp
+CXXFLAGS_OPENMP := -qopenmp
 
 # pgi flags:
 #CXX := pgCC
@@ -39,12 +39,16 @@ CXXFLAGS := $(CXXFLAGS_OPT)
 # add mpi to compile (comment out for serial build)
 # the following assumes the existence of an mpi compiler
 # wrapper called mpicxx
-CXX := mpicxx
-CXXFLAGS += -DUSE_MPI
+#CXX := mpicxx
+#CXXFLAGS += -DUSE_MPI
 
 # add openmp flags (comment out for serial build)
 CXXFLAGS += $(CXXFLAGS_OPENMP)
 LDFLAGS += $(CXXFLAGS_OPENMP)
+
+# dynamorio flags
+CXXFLAGS += -I $(DYNAMORIO_ROOT)/include/ -D LINUX -D X86_64
+LDFLAGS += -L $(DYNAMORIO_ROOT)/lib64/release/ -l dynamorio
 
 LD := $(CXX)
 

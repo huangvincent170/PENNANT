@@ -30,6 +30,8 @@
 #include "QCS.hh"
 #include "HydroBC.hh"
 
+#include <dr_api.h>
+
 using namespace std;
 
 
@@ -169,7 +171,7 @@ void Hydro::initRadialVel(
 
 void Hydro::doCycle(
             const double dt) {
-
+    dr_app_start();
     const int numpch = mesh->numpch;
     const int numsch = mesh->numsch;
     double2* px = mesh->px;
@@ -304,6 +306,7 @@ void Hydro::doCycle(
         calcDtHydro(zdl, zvol, zvol0, dt, zfirst, zlast);
     }  // for zch
 
+    dr_app_stop();
 }
 
 
